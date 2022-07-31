@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block scripts %}
+
+<script src="{% static 'quizzes/my_quizzes.js' %}" defer></script>
+
+{% endblock scripts %}
+
+{% block title %}
+My Quizzes
+{% endblock title %}
+
+{% block page_header %} List Quiz {% endblock page_header %}
+
+{% block content %}
+
+<div class="modal fade" id="MyQuizzesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Start</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body-confirm"></div>
+            <div class="modal-footer">
+                <a id="QuestionsUri" class="btn btn-primary" >View Questions</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w-100 h-auto">
+    <a href="{% url 'Quiz:create_quiz' %}" class="btn btn-primary float-right">Create Quiz</a>
+</div>
+<br>
+{% if my_quizzes %}
+{% for obj in my_quizzes %}
+<button class="btn btn-link modal-button" id="MyQuizzesOpenModal" data-pk="{{ obj.pk }}" data-quiz="{{ obj.name }}"
+    data-questions="{{ obj.number_of_questions }}" data-difficulty="{{ obj.quiz_difficulty }}" data-uri="{% url 'Quiz:quiz_questions' pk=obj.pk %}"
+    data-time="{{ obj.duration }}" data-pass="{{ obj.Pass_score }}" data-toggle="modal" data-target="#QuizStartModal">
+
+    {{ obj.name }}
+
+</button>
+<br>
+
+
+{% endfor %}
+{% else %}
+<p class="lead">No Quizzes Yet. <a href="{% url 'Quiz:create_quiz' %}">Create a Quiz</a></p>
+{% endif %}
+
+
+{% endblock content %}

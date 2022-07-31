@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Question Answers
+{% endblock title %}
+
+{% block page_header %} Question Answers {% endblock page_header %}
+
+
+{% block content %}
+<div class="w-100 h-auto">
+    <a href="{% url 'Quiz:create_question_answer' pk=question_id %}" class="btn btn-primary float-right">Add an Answer</a>
+</div>
+<br>
+{% if answers %}
+<div class="h5 mb-3">Question: <b>{{ answers.0.question.text }}</b></div>
+<p class="lead">Answers: </p>
+<hr>
+{% for obj in answers %}
+<div class="text-muted">
+    <ul>
+        <li>Text: <b>{{ obj.text }}</b></li>
+        <li>Correct: <b>{{ obj.correct }}</b></li>
+        <li>Created <b>{{ obj.created_on }}</b></li>
+    </ul>
+</div>
+<br>
+<hr>
+
+{% endfor %}
+{% else %}
+<p class="lead">No Answers Yet. <a href="{% url 'Quiz:create_question_answer' pk=question_id %}">Add an answer</a></p>
+{% endif %}
+
+{% endblock content %}

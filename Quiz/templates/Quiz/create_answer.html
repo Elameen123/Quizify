@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Create Answer
+{% endblock title %}
+
+{% block page_header %} Create Answer {% endblock page_header %}
+
+{% block content %}
+<form action="{% url 'Quiz:create_question_answer' pk=question_id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary float-right" type="submit">Create Answer</button>
+</form>
+{% endblock content %}
